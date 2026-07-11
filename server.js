@@ -15,6 +15,9 @@ route.use(express.static('public'));
 route.post('/bot-response', async (req, res) => {
     const response = await ollama.chat({
         model: 'dental:model', //smollm2:360m
+        options: {
+            num_predict: 40 // Decide how long a response should be.
+        },
         messages: [
             {
                 role: 'user',
