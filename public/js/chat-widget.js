@@ -71,7 +71,7 @@ function sendMessage(){
 
     messageInput.value="";
 
-    fakeReply();
+    fakeReply(text);
 
 }
 
@@ -88,26 +88,27 @@ messageInput.addEventListener("keypress",function(e){
 });
 
 /* Fake Reply */
-function fakeReply(){
+function fakeReply(userText){
 
     typing.style.display="block";
 
     messages.scrollTop=messages.scrollHeight;
-
-    setTimeout(function(){
+    
+    setTimeout(async function(){
 
         typing.style.display="none";
-
-        const replies=[
-            "Thank you 😊",
-            "We'll reply shortly.",
-            "Can you explain a little more?",
-            "Our team is checking.",
-            "Thanks for contacting us!"
-        ];
-
+        //Call API to generate bot reply
+        response = await fetch('/bot-response', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({userText})
+        });
+        jsonreponse = await response.json();
+        botReply = jsonreponse.reply;
         addMessage(
-            replies[Math.floor(Math.random()*replies.length)],
+            botReply,
             "bot"
         );
 
