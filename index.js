@@ -8,7 +8,7 @@ const host = process.env.OLLAMA_HOST;
 const port = process.env.OLLAMA_PORT;
 
 //express.static('ebot');
-route.use(express.static('views'));
+route.use(express.static('public'));
 
 route.get('/', (req, res) => {
     res.sendFile('index.html');
